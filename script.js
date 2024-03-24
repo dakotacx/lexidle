@@ -55,6 +55,8 @@ function sendRatingToServer(word, rating) {
     console.log(data);
     // If the rating was successfully received, remove the word from the array
     words = words.filter(w => w !== word);
+    // Store the rating in the userRatings array
+    storeRating(word, rating);
     // Prepare for the next word or notify the user that the list is finished
     setRandomWord();
     // Update the average ratings display
@@ -123,5 +125,4 @@ submitRating.addEventListener('click', function() {
 
 // Initialize game with a random word
 setRandomWord();
-displayAverageRatings();
 updateSliderValue(document.getElementById('beautySlider').value);
