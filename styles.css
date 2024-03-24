@@ -104,9 +104,10 @@ body {
 }
 
 #averageContainer {
-  justify-content: center; /* Centers children horizontally in the container */
-  align-items: center; /* Centers children vertically in the container */
-  height: 100px; /* Adjust the height as needed */
+  display: flex; /* Using flexbox for centering */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally in the container */
+  min-height: 100px; /* Adjust the height as needed */
   margin: auto;
   width: 50%;
 }
@@ -139,7 +140,7 @@ body {
 
   #averageRatingsDisplay {
     width: 80%; /* Adjust the width as needed, smaller percentage to provide padding */
-    margin: 10px 0; /* Centered with equal top and bottom margin */
+    margin: 20px 0; /* Centered with equal top and bottom margin */
   }
 }
 
