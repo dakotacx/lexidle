@@ -131,15 +131,12 @@ body {
 
 @media (max-width: 768px) {
   #averageContainer {
-    display: flex; /* Using flexbox for centering */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center children horizontally in the container */
-    width: 100%; /* Use the full width */
+    width: 80%;
+    margin: auto;
   }
 
   #averageRatingsDisplay {
     width: 80%; /* Adjust the width as needed, smaller percentage to provide padding */
-    margin: 20px 0; /* Centered with equal top and bottom margin */
   }
 }
 
