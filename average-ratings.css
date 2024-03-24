@@ -1,0 +1,26 @@
+/* average-ratings.css */
+
+#averageRatingsDisplay {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 20px;
+  max-width: 600px; /* Adjust the max-width as needed */
+}
+
+.average-rating-item {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* only if you want a separator */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  #averageRatingsDisplay {
+    padding: 10px;
+    margin: 10px;
+  }
+}

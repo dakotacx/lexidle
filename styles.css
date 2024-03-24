@@ -1,0 +1,116 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.game-container {
+  position: relative;
+  margin-top: 50px;
+}
+
+.slider-container {
+  position: flex;
+  align-items: center;
+}
+
+.word-display {
+  font-size: 3em; /* Large text */
+  color: #333; /* Dark grey color */
+  text-align: center; /* Center the word horizontally */
+  margin: 20px 0; /* Add some space above and below the word */
+  font-family: 'Arial', sans-serif; /* Choose a font */
+}
+
+.beauty-slider {
+  -webkit-appearance: none; /* Override default look on WebKit browsers */
+  width: 50%; /* Full width */
+  height: 15px; /* Set the slider thickness */
+  background: #ddd; /* Background color for the slider */
+  outline: none; /* Remove the outline on focus */
+  opacity: 0.7; /* Slightly transparent */
+  -webkit-transition: .2s; /* Smooth transition */
+  transition: opacity .2s;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#sliderValue {
+  margin-right: 20px; /* Space between value and rate button, if needed */
+}
+
+.beauty-slider:hover {
+  opacity: 1; /* Fully opaque on hover */
+}
+
+.beauty-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Width of the thumb */
+  height: 25px; /* Height of the thumb */
+  background: #4CAF50; /* Thumb color */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%; /* Circular thumb */
+}
+
+.beauty-slider::-moz-range-thumb {
+  width: 25px; /* Width of the thumb */
+  height: 25px; /* Height of the thumb */
+  background: #4CAF50; /* Thumb color */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%; /* Circular thumb */
+}
+
+.ratings-button {
+  background-color: #4CAF50; /* Button color */
+  border: none;
+  color: white;
+  padding: 15px 32px; /* Top/bottom and left/right padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px; /* Spacing around the button */
+  transition-duration: 0.4s; /* Smooth transition for hover effect */
+  cursor: pointer; /* Change cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.ratings-button:hover {
+  background-color: #005f73; /* Darker shade for hover effect */
+  color: white;
+}
+
+#averageContainer {
+  justify-content: center; /* Centers children horizontally in the container */
+  align-items: center; /* Centers children vertically in the container */
+  height: 100px; /* Adjust the height as needed */
+  margin: auto;
+  width: 50%;
+}
+
+#averageRatingsDisplay {
+  margin: 0 auto; /* This will center the div if it has a defined width */
+  width: 50%; /* Adjust the width as needed */
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.average-rating-item {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* only if you want a separator */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  #averageRatingsDisplay {
+    padding: 10px;
+    margin: 10px;
+  }
+}
+
