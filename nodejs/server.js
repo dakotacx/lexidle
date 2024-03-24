@@ -63,7 +63,8 @@ app.get('/ratings', (req, res) => {
 });
 
 // Endpoint to get average ratings
-app.get('/average-ratings', (req, res) => {
+app.post('/average-ratings', (req, res) => {
+  const requestedWords = req.body.words; // assuming the POST data contains a "words" property
   fs.readFile(DATA_FILE, (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Error reading data file', error: err });
@@ -72,13 +73,15 @@ app.get('/average-ratings', (req, res) => {
     const ratings = JSON.parse(data);
     let averageRatings = {};
 
-    for (const word in ratings) {
-      const ratingArray = ratings[word];
-      const sum = ratingArray.reduce((acc, curr) => acc + curr, 0);
-      const average = sum / ratingArray.length;
-      averageRatings[word] = average;
-    }
-    
+    requestedWords.forEach(word => {
+      if (ratings[word]) {
+        const ratingArray = ratings[word];
+        const sum = ratingArray.reduce((acc, curr) => acc + curr, 0);
+        const average = sum / ratingArray.length;
+        averageRatings[word] = average;
+      }
+    });
+
     res.status(200).json(averageRatings);
   });
 });

@@ -3,6 +3,15 @@ body {
   text-align: center;
 }
 
+.page-title {
+  font-size: 4em; /* Larger title size */
+  color: #4CAF50; /* Harmonizing with the slider and button color */
+  margin-top: 30px; /* Spacing from the top */
+  margin-bottom: 20px; /* Spacing from the content below */
+  font-weight: bold; /* Making the title bold */
+  text-shadow: 2px 2px #ddd; /* Optional: adding a subtle shadow for depth */
+}
+
 .game-container {
   position: relative;
   margin-top: 50px;
