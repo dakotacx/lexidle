@@ -1,14 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const fs = require('fs');
 const app = express();
-const port = 3000;
 
-// Store user ratings, initially empty
-let ratings = {};
+const DATA_FILE = './ratings.json';
 
 app.use(bodyParser.json());
 
+// Enable CORS for all routes
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -18,30 +17,53 @@ app.use((req, res, next) => {
 // Endpoint to receive ratings
 app.post('/rate', (req, res) => {
   const { word, rating } = req.body;
-  if (word && rating !== undefined) {
-    if (!ratings[word]) {
-      ratings[word] = []; // Initialize an array for the word if it doesn't exist
+  // Read the current data from the file
+  fs.readFile(DATA_FILE, (err, data) => {
+    if (err) {
+      // If file doesn't exist, start with an empty object
+      if (err.code === 'ENOENT') {
+        data = '{}';
+      } else {
+        return res.status(500).json({ message: 'Error reading data file', error: err });
+      }
     }
-    ratings[word].push(rating); // Push the new rating to the array for the word
-    res.status(200).send({ message: 'Rating received' });
-  } else {
-    res.status(400).send({ message: 'Invalid rating data received' });
-  }
+    
+    let ratings;
+    try {
+      // Parse data to JSON
+      ratings = JSON.parse(data);
+    } catch (parseError) {
+      return res.status(500).json({ message: 'Error parsing data', error: parseError });
+    }
+    
+    // Add the new rating
+    if (!ratings[word]) {
+      ratings[word] = [];
+    }
+    ratings[word].push(rating);
+    
+    // Write the updated ratings back to the file
+    fs.writeFile(DATA_FILE, JSON.stringify(ratings, null, 2), (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error writing data file', error: err });
+      }
+      res.status(200).json({ message: 'Rating saved' });
+    });
+  });
 });
 
 // Endpoint to get all ratings
 app.get('/ratings', (req, res) => {
-  res.status(200).json(ratings);
+  fs.readFile(DATA_FILE, (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error reading data file', error: err });
+    }
+    res.status(200).json(JSON.parse(data));
+  });
 });
 
 // Endpoint to get average ratings
-app.post('/average-ratings', (req, res) => {
-  const requestedWords = req.body.words; // Expecting an array of words in the request body
-  
-  if (!Array.isArray(requestedWords)) {
-    return res.status(400).json({ message: 'Invalid input: expected an array of words' });
-  }
-
+app.get('/average-ratings', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
     if (err) {
       return res.status(500).json({ message: 'Error reading data file', error: err });
@@ -50,24 +72,18 @@ app.post('/average-ratings', (req, res) => {
     const ratings = JSON.parse(data);
     let averageRatings = {};
 
-    // Calculate averages only for the requested words
-    requestedWords.forEach(word => {
-      if (ratings[word]) {
-        const ratingArray = ratings[word];
-        const sum = ratingArray.reduce((acc, curr) => acc + curr, 0);
-        const average = sum / ratingArray.length;
-        averageRatings[word] = average;
-      } else {
-        // If there are no ratings for the word, you might want to indicate that
-        averageRatings[word] = "No ratings";
-      }
-    });
+    for (const word in ratings) {
+      const ratingArray = ratings[word];
+      const sum = ratingArray.reduce((acc, curr) => acc + curr, 0);
+      const average = sum / ratingArray.length;
+      averageRatings[word] = average;
+    }
     
     res.status(200).json(averageRatings);
   });
 });
 
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

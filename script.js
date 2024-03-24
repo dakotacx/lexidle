@@ -23,11 +23,13 @@ function setRandomWord() {
     wordDisplay.innerText = getRandomWord();
     submitRating.style.display = ''; // Show the button if it was previously hidden
     beautySlider.style.display = ''; // Show the slider if it was previously hidden
+    document.getElementById('sliderValue').style.display = ''; // Show the slider value if it was previously hidden
+
   } else {
     wordDisplay.innerText = "No more words to rate!";
     submitRating.style.display = 'none'; // Hide the button
     beautySlider.style.display = 'none'; // Hide the slider
-    sliderValue.style.display = 'none'; // Hide the slider value
+    document.getElementById('sliderValue').style.display = 'none'; // Hide the slider value
   }
 }
 
@@ -69,21 +71,35 @@ function sendRatingToServer(word, rating) {
 
 // Function to fetch and display average ratings
 function displayAverageRatings() {
-  fetch('https://wordbeautybackend-f025b38f8d53.herokuapp.com/average-ratings')
-    .then(response => response.json())
-    .then(data => {
-      console.log('Average Ratings:', data);
-      // Assuming you have a <div> with id="averageRatingsDisplay" to display the averages
-      const averageRatingsDisplay = document.getElementById('averageRatingsDisplay');
-      averageRatingsDisplay.innerHTML = ''; // Clear previous content
-      for (const word in data) {
-        const average = data[word];
-        averageRatingsDisplay.innerHTML += `<div class="average-rating-item">${word}: ${average.toFixed(2)}</div>`;
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching average ratings:', error);
-    });
+  // Extract the words the user has rated
+  const ratedWords = userRatings.map(rating => rating.word);
+
+  fetch('https://wordbeautybackend-f025b38f8d53.herokuapp.com/average-ratings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ words: ratedWords }), // Send the array of rated words
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error('Network response was not ok.');
+  })
+  .then(data => {
+    console.log('Average Ratings:', data);
+    // Assuming you have a <div> with id="averageRatingsDisplay" to display the averages
+    const averageRatingsDisplay = document.getElementById('averageRatingsDisplay');
+    averageRatingsDisplay.innerHTML = ''; // Clear previous content
+    for (const word in data) {
+      const average = data[word];
+      averageRatingsDisplay.innerHTML += `<div class="average-rating-item">${word}: ${average.toFixed(2)}</div>`;
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching average ratings:', error);
+  });
 }
 
 // Function to update the slider value display
