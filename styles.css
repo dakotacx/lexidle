@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
+  overflow-x: hidden; /* Hide horizontal overflow */
 }
 
 .page-title {
@@ -20,6 +21,9 @@ body {
 .slider-container {
   position: flex;
   align-items: center;
+  width: 100%; /* Ensure the container does not exceed viewport width */
+  padding: 0 10px; /* Add padding to ensure content doesn't touch the screen edges */
+  box-sizing: border-box; /* Include padding in the element's total width */
 }
 
 .word-display {
@@ -42,10 +46,19 @@ body {
   margin-bottom: 20px;
   flex-grow: 1;
   margin-right: 10px;
+  max-width: 100%; /* Ensure the slider does not exceed the container width */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
 #sliderValue {
   margin-right: 20px; /* Space between value and rate button, if needed */
+  font-size: 1.5em
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
+  color: #4CAF50;
+  max-width: 100%;
 }
 
 .beauty-slider:hover {
