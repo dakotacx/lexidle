@@ -27,6 +27,7 @@ function setRandomWord() {
     wordDisplay.innerText = "No more words to rate!";
     submitRating.style.display = 'none'; // Hide the button
     beautySlider.style.display = 'none'; // Hide the slider
+    sliderValue.style.display = 'none'; // Hide the slider value
   }
 }
 
