@@ -35,7 +35,7 @@ function sendRatingToServer(word, rating) {
   // Convert rating to a number to ensure proper data type is sent
   const numericRating = Number(rating);
 
-  fetch('http://localhost:3000/rate', {
+  fetch('https://wordbeautybackend-f025b38f8d53.herokuapp.com/rate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ function sendRatingToServer(word, rating) {
 
 // Function to fetch and display average ratings
 function displayAverageRatings() {
-  fetch('http://localhost:3000/average-ratings')
+  fetch('https://wordbeautybackend-f025b38f8d53.herokuapp.com/average-ratings')
     .then(response => response.json())
     .then(data => {
       console.log('Average Ratings:', data);
