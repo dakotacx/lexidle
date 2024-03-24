@@ -53,14 +53,14 @@ function sendRatingToServer(word, rating) {
   })
   .then(data => {
     console.log(data);
-    // If the rating was successfully received, remove the word from the array
+    // If the rating was successfully received, store the rating locally
+    storeRating(word, numericRating);
+    // Remove the word from the array
     words = words.filter(w => w !== word);
-    // Store the rating in the userRatings array
-    storeRating(word, rating);
     // Prepare for the next word or notify the user that the list is finished
     setRandomWord();
-    // Update the average ratings display
-    displayAverageRatings();
+    // Update the average ratings display for ONLY the rated words
+    displayAverageRatings(userRatings.map(rating => rating.word));
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -72,10 +72,7 @@ function sendRatingToServer(word, rating) {
 }
 
 // Function to fetch and display average ratings
-function displayAverageRatings() {
-  // Extract the words the user has rated
-  const ratedWords = userRatings.map(rating => rating.word);
-
+function displayAverageRatings(ratedWords) {
   fetch('https://wordbeautybackend-f025b38f8d53.herokuapp.com/average-ratings', {
     method: 'POST',
     headers: {
