@@ -58,6 +58,9 @@ body {
   margin-right: 20px;
   color: #4CAF50;
   max-width: 100%;
+  display: inline-block;
+  width: 3em; /* Adjust the width as needed to fit the largest value */
+  text-align: center; /* Optional: for better alignment of the value */
 }
 
 .beauty-slider:hover {
